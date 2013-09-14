@@ -41,7 +41,11 @@
         ts (/ (tan (* 0.5 (- (* PI 0.5) phi))) con2)]
         (- 0 (* r-major (log ts)))))
 
+(defn wgs84->mercator
+  "convert wgs84 lat/lng to mercator coordinates"
+  [coordinates]
+  (let [{:keys [lat lng]} coordinates]
+    {:x (lon-wgs84->mercator lng) :y (lat-wgs84->mercator lat)}))
 
-(defn -main []
-  (println (lat-wgs84->mercator 25)))
+(defn -main [])
 

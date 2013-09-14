@@ -18,3 +18,7 @@
   (testing "converts lon degree to mercator coordinate"
     (is (= (lat-wgs84->mercator 25) 2857692.6111605316))))
 
+(deftest wgs84->mercator-test
+  (testing "converts wgs84 to mercator"
+    (is (= (wgs84->mercator {:lat 26 :lng 26}) {:x 2894306.760625113, :y 2980355.483149403}))))
+
