@@ -1,4 +1,8 @@
-(ns clojure-mercator-projection.core)
+(ns clojure-mercator-projection.core
+  (:require [clojure.contrib.generic.math-functions :refer :all]
+            [clojure.contrib.math :refer [expt] :only [expt]]))
+
+(def PI (. Math PI))
 
 (def r-major "Equatorial Radius, WGS84" 6378137.0)
 
@@ -6,17 +10,38 @@
 
 (def f (/ 1 (/ (- r-major r-minor) r-major)))
 
+(def eccent
+  (let [temp (/ r-minor r-major)
+        es (- 1.0 (* temp temp))]
+    (sqrt es)))
+
 (defn deg->rad
   "convert degrees to radians"
   [degree]
-  (* degree (/ (. Math PI) 180)))
+  (* degree (/ PI 180)))
 
 (defn rad->deg
   "converts radians to degrees"
   [rad]
-  (/ rad (/ (. Math PI) 180)))
+  (/ rad (/ PI 180)))
+
+(defn lon-wgs84->mercator
+  "convert wgs84 lon to mercator projection"
+  [lon]
+  (* r-major (deg->rad lon)))
+
+(defn lat-wgs84->mercator
+  "converts wgs84 latitude to mercator projection"
+  [lat]
+  (let [phi (deg->rad lat)
+        sinphi (sin phi)
+        con (* eccent sinphi)
+        com (* 0.5 eccent)
+        con2 (expt (/ (- 1.0 con) (+ 1.0 con)) com)
+        ts (/ (tan (* 0.5 (- (* PI 0.5) phi))) con2)]
+        (- 0 (* r-major (log ts)))))
 
 
 (defn -main []
-  (println (deg->rad 144)))
+  (println (lat-wgs84->mercator 25)))
 
