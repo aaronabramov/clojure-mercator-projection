@@ -11,6 +11,11 @@
   [degree]
   (* degree (/ (. Math PI) 180)))
 
+(defn rad->deg
+  "converts radians to degrees"
+  [rad]
+  (/ rad (/ (. Math PI) 180)))
+
 
 (defn -main []
   (println (deg->rad 144)))
