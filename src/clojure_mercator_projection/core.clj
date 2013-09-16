@@ -8,8 +8,6 @@
 
 (def ^:private r-minor 6356752.314245179)
 
-(def f (/ 1 (/ (- r-major r-minor) r-major)))
-
 (def eccent
   (let [temp (/ r-minor r-major)
         es (- 1.0 (* temp temp))]
