@@ -41,9 +41,6 @@
 
 (defn wgs84->mercator
   "convert wgs84 lat/lng to mercator coordinates"
-  [coordinates]
-  (let [{:keys [lat lng]} coordinates]
-    {:x (lon-wgs84->mercator lng) :y (lat-wgs84->mercator lat)}))
-
-(defn -main [])
-
+  [{:keys [lat lng]}]
+  {:x (lon-wgs84->mercator lng)
+   :y (lat-wgs84->mercator lat)})
