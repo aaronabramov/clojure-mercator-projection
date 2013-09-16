@@ -2,11 +2,11 @@
   (:require [clojure.contrib.generic.math-functions :refer :all]
             [clojure.contrib.math :refer [expt] :only [expt]]))
 
-(def PI (. Math PI))
+(def ^:private PI (. Math PI))
 
-(def r-major "Equatorial Radius, WGS84" 6378137.0)
+(def ^:private r-major "Equatorial Radius, WGS84" 6378137.0)
 
-(def r-minor 6356752.314245179)
+(def ^:private r-minor 6356752.314245179)
 
 (def f (/ 1 (/ (- r-major r-minor) r-major)))
 
