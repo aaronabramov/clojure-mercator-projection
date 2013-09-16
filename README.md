@@ -1,5 +1,6 @@
-### Some math to convert World Geodetic System coordinates to Mercator projection
+### Convert World Geodetic System (WGS-84) coordinates to Mercator (UTM) projection.
+
 ```clojure
-clojure-mercator-projection.core=> (wgs84->mercator {:lat 41.897865137687376 :lng -87.64455200350926})
+=> (wgs84->mercator {:lat 41.897865137687376 :lng -87.64455200350926})
 {:x -9756546.899835236, :y 5117150.255835393}
 ```
