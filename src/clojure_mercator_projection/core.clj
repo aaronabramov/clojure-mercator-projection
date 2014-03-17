@@ -4,42 +4,19 @@
 
 (def PI (. Math PI))
 
-(def r-major "Equatorial Radius, WGS84" 6378137.0)
+(def rad-per-deg (/ PI 180.0))
 
-(def r-minor 6356752.314245179)
-
-(def f (/ 1 (/ (- r-major r-minor) r-major)))
-
-(def eccent
-  (let [temp (/ r-minor r-major)
-        es (- 1.0 (* temp temp))]
-    (sqrt es)))
-
-(defn deg->rad
-  "convert degrees to radians"
-  [degree]
-  (* degree (/ PI 180)))
-
-(defn rad->deg
-  "converts radians to degrees"
-  [rad]
-  (/ rad (/ PI 180)))
+(def equatorial-radius 6378137.0)
 
 (defn lon-wgs84->mercator
   "convert wgs84 lon to mercator projection"
   [lon]
-  (* r-major (deg->rad lon)))
+  (* lon rad-per-deg equatorial-radius))
 
 (defn lat-wgs84->mercator
   "converts wgs84 latitude to mercator projection"
   [lat]
-  (let [phi (deg->rad lat)
-        sinphi (sin phi)
-        con (* eccent sinphi)
-        com (* 0.5 eccent)
-        con2 (expt (/ (- 1.0 con) (+ 1.0 con)) com)
-        ts (/ (tan (* 0.5 (- (* PI 0.5) phi))) con2)]
-        (- 0 (* r-major (log ts)))))
+  (* (log (tan (+ (/ PI 4.0) (* lat (/ rad-per-deg 2.0))))) equatorial-radius))
 
 (defn wgs84->mercator
   "convert wgs84 lat/lng to mercator coordinates"
