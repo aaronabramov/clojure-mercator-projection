@@ -25,4 +25,3 @@
     {:x (lon-wgs84->mercator lng) :y (lat-wgs84->mercator lat)}))
 
 (defn -main [])
-
